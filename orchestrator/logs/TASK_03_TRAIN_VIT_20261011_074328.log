@@ -1,0 +1,21 @@
+=== DEEPSHIELD TASK LOG: TASK_03_TRAIN_VIT ===
+Command: .venv\Scripts\python.exe -u src/training/train_vit.py --batch_size 64 --val_batch_size 64 --epochs 25 --lr 1e-4 --seed 42 --patience 6 --resume models/checkpoints/latest_vit_b16.pt
+Start Time: 2026-10-11T07:43:28Z
+
+=======================================================
+TRAINING: Vision Transformer (ViT-B/16, 128x128) on cuda (Seed: 42)
+Data Root: C:\DeepShieldData\ASVspoof2019_LA | Fraction: 1.0
+Train Batch Size: 64 | Val Batch Size: 64
+Learning Rate: 0.0001 | Weight Decay: 0.01
+Save Directory: models/checkpoints | Patience: 6
+=======================================================
+Class Weights: Bonafide=5.4262, Spoof=0.5507
+Resuming training from checkpoint: models/checkpoints/latest_vit_b16.pt
+Traceback (most recent call last):
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\src\training\train_vit.py", line 354, in <module>
+    main()
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\src\training\train_vit.py", line 261, in main
+    torch.set_rng_state(ckpt["rng_state"])
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\.venv\Lib\site-packages\torch\random.py", line 36, in set_rng_state
+    default_generator.set_state(new_state)
+TypeError: RNG state must be a torch.ByteTensor

@@ -1,0 +1,7 @@
+{
+  "dataset": "ASVspoof2021_DF",
+  "metadata_keys_present": true,
+  "flac_audio_present": false,
+  "evaluation_status": "DOCUMENTED_MISSING_AUDIO",
+  "audit_finding": "Official evaluation audio FLAC files (~600k files, >20 GB) are absent from local storage. Zero Fabrication Directive mandates documenting this absence rather than fabricating synthetic metrics."
+}

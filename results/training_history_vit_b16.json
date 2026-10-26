@@ -1,0 +1,200 @@
+[
+  {
+    "epoch": 1,
+    "train_loss": 0.336155,
+    "train_acc": 0.832279,
+    "dev_loss": 0.248305,
+    "dev_eer": 0.177508,
+    "dev_threshold": 0.897461,
+    "elapsed_seconds": 540.26
+  },
+  {
+    "epoch": 2,
+    "train_loss": 0.145471,
+    "train_acc": 0.93991,
+    "dev_loss": 0.053161,
+    "dev_eer": 0.034603,
+    "dev_threshold": 0.930176,
+    "elapsed_seconds": 412.46
+  },
+  {
+    "epoch": 3,
+    "train_loss": 0.069641,
+    "train_acc": 0.974272,
+    "dev_loss": 0.064583,
+    "dev_eer": 0.037765,
+    "dev_threshold": 0.703613,
+    "elapsed_seconds": 516.51
+  },
+  {
+    "epoch": 4,
+    "train_loss": 0.051004,
+    "train_acc": 0.982242,
+    "dev_loss": 0.150007,
+    "dev_eer": 0.051339,
+    "dev_threshold": 0.365234,
+    "elapsed_seconds": 498.8
+  },
+  {
+    "epoch": 5,
+    "train_loss": 0.038867,
+    "train_acc": 0.984444,
+    "dev_loss": 0.240234,
+    "dev_eer": 0.040815,
+    "dev_threshold": 0.060974,
+    "elapsed_seconds": 484.14
+  },
+  {
+    "epoch": 6,
+    "train_loss": 0.029903,
+    "train_acc": 0.989094,
+    "dev_loss": 0.121042,
+    "dev_eer": 0.039644,
+    "dev_threshold": 0.329834,
+    "elapsed_seconds": 513.2
+  },
+  {
+    "epoch": 7,
+    "train_loss": 0.02706,
+    "train_acc": 0.989478,
+    "dev_loss": 0.208078,
+    "dev_eer": 0.033034,
+    "dev_threshold": 0.056915,
+    "elapsed_seconds": 480.99
+  },
+  {
+    "epoch": 8,
+    "train_loss": 0.034557,
+    "train_acc": 0.98759,
+    "dev_loss": 0.178885,
+    "dev_eer": 0.044751,
+    "dev_threshold": 0.234375,
+    "elapsed_seconds": 496.12
+  },
+  {
+    "epoch": 9,
+    "train_loss": 0.016815,
+    "train_acc": 0.993987,
+    "dev_loss": 0.056244,
+    "dev_eer": 0.029075,
+    "dev_threshold": 0.855469,
+    "elapsed_seconds": 477.28
+  },
+  {
+    "epoch": 10,
+    "train_loss": 0.019619,
+    "train_acc": 0.993253,
+    "dev_loss": 0.086014,
+    "dev_eer": 0.022,
+    "dev_threshold": 0.247803,
+    "elapsed_seconds": 484.53
+  },
+  {
+    "epoch": 11,
+    "train_loss": 0.015362,
+    "train_acc": 0.994722,
+    "dev_loss": 0.049953,
+    "dev_eer": 0.025493,
+    "dev_threshold": 0.963867,
+    "elapsed_seconds": 550.66
+  },
+  {
+    "epoch": 12,
+    "train_loss": 0.011634,
+    "train_acc": 0.996085,
+    "dev_loss": 0.039029,
+    "dev_eer": 0.022706,
+    "dev_threshold": 0.967285,
+    "elapsed_seconds": 589.94
+  },
+  {
+    "epoch": 13,
+    "train_loss": 0.006019,
+    "train_acc": 0.997833,
+    "dev_loss": 0.036968,
+    "dev_eer": 0.019589,
+    "dev_threshold": 0.987305,
+    "elapsed_seconds": 617.1
+  },
+  {
+    "epoch": 14,
+    "train_loss": 0.00026,
+    "train_acc": 0.99993,
+    "dev_loss": 0.038121,
+    "dev_eer": 0.015743,
+    "dev_threshold": 0.971191,
+    "elapsed_seconds": 556.17
+  },
+  {
+    "epoch": 15,
+    "train_loss": 1.3e-05,
+    "train_acc": 1.0,
+    "dev_loss": 0.03778,
+    "dev_eer": 0.015721,
+    "dev_threshold": 0.981934,
+    "elapsed_seconds": 483.2
+  },
+  {
+    "epoch": 16,
+    "train_loss": 9e-06,
+    "train_acc": 1.0,
+    "dev_loss": 0.037982,
+    "dev_eer": 0.015502,
+    "dev_threshold": 0.986328,
+    "elapsed_seconds": 482.05
+  },
+  {
+    "epoch": 17,
+    "train_loss": 8e-06,
+    "train_acc": 1.0,
+    "dev_loss": 0.038328,
+    "dev_eer": 0.015609,
+    "dev_threshold": 0.988281,
+    "elapsed_seconds": 520.87
+  },
+  {
+    "epoch": 18,
+    "train_loss": 6e-06,
+    "train_acc": 1.0,
+    "dev_loss": 0.038798,
+    "dev_eer": 0.015653,
+    "dev_threshold": 0.990234,
+    "elapsed_seconds": 596.78
+  },
+  {
+    "epoch": 19,
+    "train_loss": 6e-06,
+    "train_acc": 1.0,
+    "dev_loss": 0.039187,
+    "dev_eer": 0.015721,
+    "dev_threshold": 0.991699,
+    "elapsed_seconds": 525.8
+  },
+  {
+    "epoch": 20,
+    "train_loss": 5e-06,
+    "train_acc": 1.0,
+    "dev_loss": 0.03956,
+    "dev_eer": 0.015743,
+    "dev_threshold": 0.992676,
+    "elapsed_seconds": 413.43
+  },
+  {
+    "epoch": 21,
+    "train_loss": 5e-06,
+    "train_acc": 1.0,
+    "dev_loss": 0.039856,
+    "dev_eer": 0.015698,
+    "dev_threshold": 0.993164,
+    "elapsed_seconds": 424.04
+  },
+  {
+    "epoch": 22,
+    "train_loss": 4e-06,
+    "train_acc": 1.0,
+    "dev_loss": 0.040125,
+    "dev_eer": 0.015743,
+    "dev_threshold": 0.993652,
+    "elapsed_seconds": 454.46
+  }
+]

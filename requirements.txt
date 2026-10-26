@@ -1,0 +1,33 @@
+# DeepShield Core Dependencies
+# Target Environment: Python 3.12 (Windows 11, CUDA 12.x / 13.x compatible)
+
+# Deep Learning Framework (CUDA-enabled)
+--extra-index-url https://download.pytorch.org/whl/cu124
+torch>=2.2.0
+torchvision>=0.17.0
+torchaudio>=2.2.0
+timm>=0.9.16
+
+# Audio Processing & Scientific Computing
+librosa>=0.10.1
+soundfile>=0.12.1
+numpy>=1.26.0,<2.0.0
+scipy>=1.12.0
+scikit-learn>=1.4.0
+pandas>=2.2.0
+
+# Visualization & Plotting
+matplotlib>=3.8.0
+seaborn>=0.13.0
+pillow>=10.2.0
+
+# Utilities & Configuration
+pyyaml>=6.0.1
+tqdm>=4.66.0
+
+# Backend REST API
+flask>=3.0.0
+flask-cors>=4.0.0
+
+# Automated Testing
+pytest>=8.0.0

@@ -1,0 +1,22 @@
+=== DEEPSHIELD TASK LOG: TASK_01_AUDIT_EXPERIMENT_A ===
+Command: .venv\Scripts\python.exe -u scripts/audit_experiment_a_discrepancy.py
+Start Time: 2026-10-10T23:07:38Z
+
+======================================================================
+DEEPSHIELD EXPERIMENT A THRESHOLD DISCREPANCY AUDIT
+Device: cuda | Checkpoint: models/checkpoints/best_efficientnet_b0.pt
+Scope: Strictly Development Partition (ASVspoof2019_LA_dev)
+======================================================================
+Loaded Checkpoint Epoch: 17 | Recorded Dev EER: 0.1480% | Recorded Dev Threshold: 0.967773
+Loaded Development Partition: 24,844 utterances
+Inference completed in 41.49s (598.8 utts/s)
+
+--- EMPIRICAL FINDINGS ---
+Total Utterances: 24,844 (Bonafide: 2,548, Spoof: 22,296)
+Recomputed Dev EER: 0.1480% | Optimal Dev Threshold: 0.967773
+Bonafide Scores: Min=0.000000e+00, Median=1.192093e-07, Max=1.000000e+00
+Spoof Scores:    Min=1.692772e-04, Median=1.000000e+00, Max=1.000000e+00
+Margin Sparsity: Only 34 of 24,844 utterances in [0.05, 0.95] (0.137%)
+Class Weights: Bonafide=4.8752, Spoof=0.5571 -> Theoretical Logit Bias = +2.1691
+
+Saved Comprehensive Audit Report to: reports/experiment_A_discrepancy_audit.md

@@ -1,0 +1,15 @@
+=== DEEPSHIELD TASK LOG: TASK_07_ROBUSTNESS_EVALUATION ===
+Command: .venv\Scripts\python.exe scripts/run_robustness.py
+Start Time: 2026-10-11T11:20:05Z
+
+Running Robustness Suite on device: cuda
+Using Frozen Thresholds -> EfficientNet: 0.967773, ViT: 0.986328
+Loading development partition with raw audio mappings...
+Loaded 24844 development utterances.
+
+Evaluating EfficientNet-B0 Robustness...
+
+Evaluating ViT-B/16 Robustness...
+
+Saved Robustness Results to results/robustness_results.json
+Saved Robustness Figure to outputs/figures/robustness_comparison.png

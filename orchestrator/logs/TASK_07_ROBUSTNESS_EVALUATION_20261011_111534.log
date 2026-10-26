@@ -1,0 +1,30 @@
+=== DEEPSHIELD TASK LOG: TASK_07_ROBUSTNESS_EVALUATION ===
+Command: .venv\Scripts\python.exe scripts/run_robustness.py
+Start Time: 2026-10-11T11:15:34Z
+
+C:\Users\parth\OneDrive\Desktop\DeepShield\.venv\Lib\site-packages\sklearn\metrics\_ranking.py:1364: UndefinedMetricWarning: No positive samples in y_true, true positive value should be meaningless
+  warnings.warn(
+Running Robustness Suite on device: cuda
+Using Frozen Thresholds -> EfficientNet: 0.967773, ViT: 0.986328
+Loading development partition with raw audio mappings...
+Loaded 24844 development utterances.
+
+Evaluating EfficientNet-B0 Robustness...
+Traceback (most recent call last):
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\scripts\run_robustness.py", line 145, in <module>
+    main()
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\scripts\run_robustness.py", line 81, in main
+    eff_res = evaluate_robustness_suite(
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\src\evaluation\robustness.py", line 112, in evaluate_robustness_suite
+    metrics = compute_all_metrics(y_true, y_scores, threshold=threshold)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\src\evaluation\metrics.py", line 68, in compute_all_metrics
+    eer, eer_threshold = compute_eer(y_true, y_scores)
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\src\evaluation\metrics.py", line 42, in compute_eer
+    eer_idx = np.nanargmin(np.abs(fpr - fnr))
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\.venv\Lib\site-packages\numpy\lib\_nanfunctions_impl.py", line 562, in nanargmin
+    raise ValueError("All-NaN slice encountered")
+ValueError: All-NaN slice encountered

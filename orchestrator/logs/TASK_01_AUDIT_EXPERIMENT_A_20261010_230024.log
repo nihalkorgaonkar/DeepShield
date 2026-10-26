@@ -1,0 +1,39 @@
+=== DEEPSHIELD TASK LOG: TASK_01_AUDIT_EXPERIMENT_A ===
+Command: .venv\Scripts\python.exe scripts/audit_experiment_a_discrepancy.py
+Start Time: 2026-10-10T23:00:24Z
+
+======================================================================
+DEEPSHIELD EXPERIMENT A THRESHOLD DISCREPANCY AUDIT
+Device: cuda | Checkpoint: models/checkpoints/best_efficientnet_b0.pt
+Scope: Strictly Development Partition (ASVspoof2019_LA_dev)
+======================================================================
+Loaded Checkpoint Epoch: 17 | Recorded Dev EER: 0.1480% | Recorded Dev Threshold: 0.967773
+Loaded Development Partition: 24,844 utterances
+Inference completed in 373.94s (66.4 utts/s)
+
+--- EMPIRICAL FINDINGS ---
+Total Utterances: 24,844 (Bonafide: 2,548, Spoof: 22,296)
+Recomputed Dev EER: 0.1480% | Optimal Dev Threshold: 0.967773
+Bonafide Scores: Min=0.000000e+00, Median=1.192093e-07, Max=1.000000e+00
+Spoof Scores:    Min=1.692772e-04, Median=1.000000e+00, Max=1.000000e+00
+Margin Sparsity: Only 34 of 24,844 utterances in [0.05, 0.95] (0.137%)
+Class Weights: Bonafide=4.8752, Spoof=0.5571 -> Theoretical Logit Bias = +2.1691
+Traceback (most recent call last):
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\scripts\audit_experiment_a_discrepancy.py", line 245, in <module>
+    run_dev_audit()
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\scripts\audit_experiment_a_discrepancy.py", line 202, in run_dev_audit
+    | **Median Score ($q_{{0.50}}$)** | `{np.median(bonafide_scores):.6e}` | `{np.median(spoof_scores, 25):.6e}` | `{np.median(y_scores):.6e}` |
+                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\.venv\Lib\site-packages\numpy\lib\_function_base_impl.py", line 3999, in median
+    return _ureduce(a, func=_median, keepdims=keepdims, axis=axis, out=out,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\.venv\Lib\site-packages\numpy\lib\_function_base_impl.py", line 3862, in _ureduce
+    axis = _nx.normalize_axis_tuple(axis, nd)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\.venv\Lib\site-packages\numpy\_core\numeric.py", line 1476, in normalize_axis_tuple
+    axis = tuple(normalize_axis_index(ax, ndim, argname) for ax in axis)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\parth\OneDrive\Desktop\DeepShield\.venv\Lib\site-packages\numpy\_core\numeric.py", line 1476, in <genexpr>
+    axis = tuple(normalize_axis_index(ax, ndim, argname) for ax in axis)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+numpy.exceptions.AxisError: axis 25 is out of bounds for array of dimension 1

@@ -1,0 +1,5 @@
+=== DEEPSHIELD TASK LOG: TASK_04_FREEZE_VIT_THRESHOLD ===
+Command: .venv\Scripts\python.exe -c import json, torch, os, time; ckpt = torch.load('models/checkpoints/best_vit_b16.pt', map_location='cpu'); th = ckpt.get('dev_threshold', 0.5); eer = ckpt.get('dev_eer', 0.0); data = {'vit_b16': {'threshold': round(float(th), 6), 'dev_eer': round(float(eer), 6), 'development_dataset': 'ASVspoof2019_LA_dev', 'optimization_criterion': 'min_eer', 'random_seed': 42, 'timestamp': time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}}; os.makedirs('results', exist_ok=True); open('results/thresholds_vit.json', 'w', encoding='utf-8').write(json.dumps(data, indent=2)); print(f'Serialized ViT dev threshold {th:.6f} to results/thresholds_vit.json')
+Start Time: 2026-10-11T10:56:01Z
+
+Serialized ViT dev threshold 0.986328 to results/thresholds_vit.json

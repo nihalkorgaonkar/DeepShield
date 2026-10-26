@@ -1,0 +1,5 @@
+=== DEEPSHIELD TASK LOG: TASK_09_GENERALIZATION_2021_DF ===
+Command: .venv\Scripts\python.exe scripts/audit_generalization_2021_df.py
+Start Time: 2026-10-11T11:24:02Z
+
+Documented ASVspoof 2021 DF status to results\generalization_2021_df_status.json

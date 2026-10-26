@@ -1,0 +1,300 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepShield — Speech Deepfake Detection</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & Babel -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        shield: {
+                            50: '#f0f9ff',
+                            500: '#0284c7',
+                            900: '#0c4a6e',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        function App() {
+            const [file, setFile] = useState(null);
+            const [audioUrl, setAudioUrl] = useState(null);
+            const [model, setModel] = useState("vit");
+            const [loading, setLoading] = useState(false);
+            const [result, setResult] = useState(null);
+            const [error, setError] = useState(null);
+            const [apiStatus, setApiStatus] = useState("checking");
+            const fileInputRef = useRef(null);
+
+            useEffect(() => {
+                fetch("http://localhost:5000/api/health")
+                    .then(res => res.json())
+                    .then(data => setApiStatus(data.status === "healthy" ? "online" : "offline"))
+                    .catch(() => setApiStatus("offline"));
+            }, []);
+
+            const handleFileChange = (e) => {
+                const selected = e.target.files[0];
+                if (selected) {
+                    setFile(selected);
+                    setAudioUrl(URL.createObjectURL(selected));
+                    setResult(null);
+                    setError(null);
+                }
+            };
+
+            const handleAnalyze = async () => {
+                if (!file) return;
+                setLoading(true);
+                setError(null);
+                setResult(null);
+
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("model", model);
+
+                try {
+                    const res = await fetch("http://localhost:5000/api/predict", {
+                        method: "POST",
+                        body: formData,
+                    });
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.error || "Inference error");
+                    setResult(data);
+                } catch (err) {
+                    setError(err.message || "Failed to connect to DeepShield API.");
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            return (
+                <div className="max-w-5xl mx-auto px-4 py-8">
+                    {/* Header */}
+                    <header className="flex items-center justify-between border-b border-slate-800 pb-6 mb-8">
+                        <div className="flex items-center space-x-3">
+                            <div className="p-2.5 bg-sky-500/10 border border-sky-500/20 rounded-xl text-sky-400">
+                                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <h1 className="text-2xl font-bold tracking-tight text-white flex items-center gap-2">
+                                    DeepShield <span className="text-xs px-2 py-0.5 bg-sky-500/20 text-sky-300 rounded-full border border-sky-500/30">v2.0 (ViT + CNN)</span>
+                                </h1>
+                                <p className="text-sm text-slate-400">Vision Transformer & CNN Speech Deepfake Detection Suite</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <span className={`w-2.5 h-2.5 rounded-full ${apiStatus === 'online' ? 'bg-emerald-500 animate-pulse' : 'bg-rose-500'}`}></span>
+                            <span className="text-xs text-slate-400 font-mono uppercase">API: {apiStatus}</span>
+                        </div>
+                    </header>
+
+                    {/* Main Grid */}
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                        {/* Left Column: Upload & Config */}
+                        <div className="lg:col-span-5 space-y-6">
+                            {/* Upload Area */}
+                            <div 
+                                onClick={() => fileInputRef.current.click()}
+                                className="border-2 border-dashed border-slate-700 hover:border-sky-500 bg-slate-900/50 hover:bg-slate-900 rounded-2xl p-8 text-center cursor-pointer transition-all duration-200"
+                            >
+                                <input 
+                                    type="file" 
+                                    ref={fileInputRef} 
+                                    onChange={handleFileChange} 
+                                    accept=".wav,.flac,.mp3" 
+                                    className="hidden" 
+                                />
+                                <div className="w-12 h-12 mx-auto mb-4 bg-slate-800 rounded-xl flex items-center justify-center text-slate-400">
+                                    <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                                    </svg>
+                                </div>
+                                <h3 className="font-semibold text-white mb-1">
+                                    {file ? file.name : "Select or Drop Audio File"}
+                                </h3>
+                                <p className="text-xs text-slate-500">Supports WAV, FLAC, MP3 (16 kHz mono normalized)</p>
+                            </div>
+
+                            {/* Audio Player */}
+                            {audioUrl && (
+                                <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
+                                    <p className="text-xs text-slate-400 mb-2 font-medium">AUDIO PREVIEW</p>
+                                    <audio controls src={audioUrl} className="w-full h-9" />
+                                </div>
+                            )}
+
+                            {/* Model Selector */}
+                            <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
+                                <label className="text-xs text-slate-400 font-semibold tracking-wider uppercase">Select Architecture</label>
+                                <div className="grid grid-cols-2 gap-3">
+                                    <button
+                                        type="button"
+                                        onClick={() => setModel("vit")}
+                                        className={`p-3 rounded-lg border text-left transition-all ${
+                                            model === "vit"
+                                                ? "bg-sky-500/10 border-sky-500 text-white"
+                                                : "bg-slate-800/50 border-slate-700 text-slate-400 hover:border-slate-600"
+                                        }`}
+                                    >
+                                        <div className="font-semibold text-sm">Vision Transformer</div>
+                                        <div className="text-xs text-slate-500">ViT-B/16 (128x128)</div>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => setModel("efficientnet")}
+                                        className={`p-3 rounded-lg border text-left transition-all ${
+                                            model === "efficientnet"
+                                                ? "bg-sky-500/10 border-sky-500 text-white"
+                                                : "bg-slate-800/50 border-slate-700 text-slate-400 hover:border-slate-600"
+                                        }`}
+                                    >
+                                        <div className="font-semibold text-sm">EfficientNet-B0</div>
+                                        <div className="text-xs text-slate-500">CNN Baseline</div>
+                                    </button>
+                                </div>
+                            </div>
+
+                            {/* Submit Button */}
+                            <button
+                                onClick={handleAnalyze}
+                                disabled={!file || loading}
+                                className={`w-full py-3.5 px-4 rounded-xl font-semibold text-sm transition-all flex items-center justify-center gap-2 ${
+                                    !file || loading
+                                        ? "bg-slate-800 text-slate-500 cursor-not-allowed"
+                                        : "bg-sky-500 hover:bg-sky-400 text-slate-950 font-bold shadow-lg shadow-sky-500/20"
+                                }`}
+                            >
+                                {loading ? (
+                                    <>
+                                        <svg className="animate-spin w-4 h-4 text-slate-950" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Extracting Log-Mel & Predicting...
+                                    </>
+                                ) : (
+                                    "Analyze Audio Authenticity"
+                                )}
+                            </button>
+
+                            {error && (
+                                <div className="p-4 bg-rose-500/10 border border-rose-500/20 rounded-xl text-rose-400 text-xs">
+                                    {error}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Right Column: Prediction Results */}
+                        <div className="lg:col-span-7">
+                            {result ? (
+                                <div className="bg-slate-900 border border-slate-800 rounded-2xl p-6 space-y-6">
+                                    {/* Verdict Badge */}
+                                    <div className="flex items-center justify-between border-b border-slate-800 pb-5">
+                                        <div>
+                                            <span className="text-xs text-slate-400 font-medium">AUTHENTICITY VERDICT</span>
+                                            <div className="flex items-center gap-3 mt-1">
+                                                <span className={`text-3xl font-extrabold tracking-tight ${
+                                                    result.prediction === 'bonafide' ? 'text-emerald-400' : 'text-rose-400'
+                                                }`}>
+                                                    {result.prediction === 'bonafide' ? 'GENUINE SPEECH' : 'DEEPFAKE DETECTED'}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div className="text-right">
+                                            <span className="text-xs text-slate-400 font-medium">CONFIDENCE</span>
+                                            <div className="text-2xl font-mono font-bold text-white">
+                                                {(result.confidence * 100).toFixed(1)}%
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Probability Bars */}
+                                    <div className="space-y-3">
+                                        <div>
+                                            <div className="flex justify-between text-xs font-medium mb-1">
+                                                <span className="text-slate-400">Genuine / Bona Fide Probability</span>
+                                                <span className="text-emerald-400 font-mono">{(result.genuine_probability * 100).toFixed(2)}%</span>
+                                            </div>
+                                            <div className="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                                                <div 
+                                                    className="bg-emerald-500 h-full rounded-full transition-all duration-500" 
+                                                    style={{ width: `${result.genuine_probability * 100}%` }}
+                                                ></div>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <div className="flex justify-between text-xs font-medium mb-1">
+                                                <span className="text-slate-400">Spoof / Deepfake Probability</span>
+                                                <span className="text-rose-400 font-mono">{(result.spoof_probability * 100).toFixed(2)}%</span>
+                                            </div>
+                                            <div className="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
+                                                <div 
+                                                    className="bg-rose-500 h-full rounded-full transition-all duration-500" 
+                                                    style={{ width: `${result.spoof_probability * 100}%` }}
+                                                ></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {/* Detailed Telemetry Grid */}
+                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
+                                        <div className="p-3 bg-slate-950/60 border border-slate-800 rounded-xl">
+                                            <p className="text-[10px] text-slate-500 uppercase font-semibold">Active Model</p>
+                                            <p className="text-xs font-mono font-bold text-slate-200 mt-1">{result.model}</p>
+                                        </div>
+                                        <div className="p-3 bg-slate-950/60 border border-slate-800 rounded-xl">
+                                            <p className="text-[10px] text-slate-500 uppercase font-semibold">Dev Threshold</p>
+                                            <p className="text-xs font-mono font-bold text-slate-200 mt-1">{result.decision_threshold}</p>
+                                        </div>
+                                        <div className="p-3 bg-slate-950/60 border border-slate-800 rounded-xl">
+                                            <p className="text-[10px] text-slate-500 uppercase font-semibold">Inference Time</p>
+                                            <p className="text-xs font-mono font-bold text-slate-200 mt-1">{result.processing_time_ms} ms</p>
+                                        </div>
+                                        <div className="p-3 bg-slate-950/60 border border-slate-800 rounded-xl">
+                                            <p className="text-[10px] text-slate-500 uppercase font-semibold">Chunks (4.0s)</p>
+                                            <p className="text-xs font-mono font-bold text-slate-200 mt-1">{result.chunks_analyzed}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="h-full min-h-[320px] bg-slate-900/30 border border-slate-800/80 rounded-2xl flex flex-col items-center justify-center p-8 text-center text-slate-500">
+                                    <svg className="w-12 h-12 mb-3 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                    </svg>
+                                    <p className="font-medium text-slate-400">Ready for Analysis</p>
+                                    <p className="text-xs mt-1 max-w-xs">Upload an audio recording on the left and click "Analyze" to inspect spectral cues and evaluate deepfake probabilities.</p>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+</body>
+</html>

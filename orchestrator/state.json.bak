@@ -1,0 +1,168 @@
+{
+  "project": "DeepShield",
+  "created_at": "2026-10-10T23:00:13Z",
+  "last_updated": "2026-10-11T07:44:18Z",
+  "active_task_id": null,
+  "tasks": {
+    "TASK_01_AUDIT_EXPERIMENT_A": {
+      "name": "Experiment A Threshold Discrepancy Audit",
+      "status": "COMPLETED",
+      "dependencies": [],
+      "retries": 0,
+      "max_retries": 1,
+      "start_time": "2026-10-10T23:07:38Z",
+      "end_time": "2026-10-10T23:08:30Z",
+      "elapsed_seconds": 52.28,
+      "exit_code": 0,
+      "artifacts": {
+        "reports/experiment_A_discrepancy_audit.md": "4655980bc6c948e807b8b7ae6584f5872aad40d3110344e0a13b8723c1758344"
+      },
+      "log_file": "orchestrator/logs\\TASK_01_AUDIT_EXPERIMENT_A_20261010_230738.log",
+      "error_message": null
+    },
+    "TASK_02_HARDEN_VIT_PIPELINE": {
+      "name": "ViT Pipeline Parity Verification",
+      "status": "COMPLETED",
+      "dependencies": [
+        "TASK_01_AUDIT_EXPERIMENT_A"
+      ],
+      "retries": 0,
+      "max_retries": 1,
+      "start_time": "2026-10-10T23:09:12Z",
+      "end_time": "2026-10-10T23:09:19Z",
+      "elapsed_seconds": 7.3,
+      "exit_code": 0,
+      "artifacts": {},
+      "log_file": "orchestrator/logs\\TASK_02_HARDEN_VIT_PIPELINE_20261010_230912.log",
+      "error_message": null
+    },
+    "TASK_03_TRAIN_VIT": {
+      "name": "Experiment B \u2014 ViT-B/16 Full Training",
+      "status": "FAILED",
+      "dependencies": [
+        "TASK_02_HARDEN_VIT_PIPELINE"
+      ],
+      "retries": 2,
+      "max_retries": 2,
+      "start_time": "2026-10-11T07:44:04Z",
+      "end_time": "2026-10-11T07:44:18Z",
+      "elapsed_seconds": 14.67,
+      "exit_code": 1,
+      "artifacts": {},
+      "log_file": "orchestrator/logs\\TASK_03_TRAIN_VIT_20261011_074404.log",
+      "error_message": "Exited with code 1 (max retries reached)"
+    },
+    "TASK_04_FREEZE_VIT_THRESHOLD": {
+      "name": "ViT Development Threshold Freezing",
+      "status": "PENDING",
+      "dependencies": [
+        "TASK_03_TRAIN_VIT"
+      ],
+      "retries": 0,
+      "max_retries": 1,
+      "start_time": null,
+      "end_time": null,
+      "elapsed_seconds": 0.0,
+      "exit_code": null,
+      "artifacts": {},
+      "log_file": null,
+      "error_message": null
+    },
+    "TASK_05_EVAL_VIT_2019_LA": {
+      "name": "Official ASVspoof 2019 LA Evaluation (ViT)",
+      "status": "PENDING",
+      "dependencies": [
+        "TASK_04_FREEZE_VIT_THRESHOLD"
+      ],
+      "retries": 0,
+      "max_retries": 1,
+      "start_time": null,
+      "end_time": null,
+      "elapsed_seconds": 0.0,
+      "exit_code": null,
+      "artifacts": {},
+      "log_file": null,
+      "error_message": null
+    },
+    "TASK_06_COMPARATIVE_ANALYSIS": {
+      "name": "Empirical Model Comparison (A vs B)",
+      "status": "PENDING",
+      "dependencies": [
+        "TASK_05_EVAL_VIT_2019_LA"
+      ],
+      "retries": 0,
+      "max_retries": 2,
+      "start_time": null,
+      "end_time": null,
+      "elapsed_seconds": 0.0,
+      "exit_code": null,
+      "artifacts": {},
+      "log_file": null,
+      "error_message": null
+    },
+    "TASK_07_ROBUSTNESS_EVALUATION": {
+      "name": "Acoustic Corruptions Robustness Suite",
+      "status": "BLOCKED",
+      "dependencies": [
+        "TASK_05_EVAL_VIT_2019_LA"
+      ],
+      "retries": 0,
+      "max_retries": 2,
+      "start_time": null,
+      "end_time": null,
+      "elapsed_seconds": 0.0,
+      "exit_code": null,
+      "artifacts": {},
+      "log_file": null,
+      "error_message": "Blocked: acoustic perturbations require raw audio path mapping and standalone CLI runner script."
+    },
+    "TASK_08_EXPLAINABILITY_ANALYSIS": {
+      "name": "Explainability & Attention Maps Generation",
+      "status": "BLOCKED",
+      "dependencies": [
+        "TASK_05_EVAL_VIT_2019_LA"
+      ],
+      "retries": 0,
+      "max_retries": 2,
+      "start_time": null,
+      "end_time": null,
+      "elapsed_seconds": 0.0,
+      "exit_code": null,
+      "artifacts": {},
+      "log_file": null,
+      "error_message": "Blocked: Grad-CAM and ViT attention rollout visualization suite requires standalone script and manifest."
+    },
+    "TASK_09_GENERALIZATION_2021_DF": {
+      "name": "ASVspoof 2021 DF Cross-Dataset Preflight & Eval",
+      "status": "BLOCKED",
+      "dependencies": [
+        "TASK_05_EVAL_VIT_2019_LA"
+      ],
+      "retries": 0,
+      "max_retries": 1,
+      "start_time": null,
+      "end_time": null,
+      "elapsed_seconds": 0.0,
+      "exit_code": null,
+      "artifacts": {},
+      "log_file": null,
+      "error_message": "Blocked: ASVspoof 2021 DF audio FLAC files not downloaded in C:\\DeepShieldData\\ASVspoof2021_DF (only metadata keys present)."
+    },
+    "TASK_10_FINAL_DELIVERABLES": {
+      "name": "Final Research Report & Artifact Quality Audit",
+      "status": "BLOCKED",
+      "dependencies": [
+        "TASK_06_COMPARATIVE_ANALYSIS"
+      ],
+      "retries": 0,
+      "max_retries": 1,
+      "start_time": null,
+      "end_time": null,
+      "elapsed_seconds": 0.0,
+      "exit_code": null,
+      "artifacts": {},
+      "log_file": null,
+      "error_message": "Blocked: pending completion and synthesis of upstream model evaluation and comparison deliverables."
+    }
+  }
+}

@@ -1,0 +1,41 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# Frontend dependencies and builds
+node_modules/
+.next/
+dist/
+build/
+.expo/
+
+# Generated output & temporary test artifacts
+outputs/
+results/eval_runs/
+tmp/
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Large machine-learning checkpoints (>100MB)
+models/checkpoints/*.pt
+models/checkpoints/*.pth
+models/checkpoints/*.ckpt
+models/checkpoints/backup_interrupted_run/
+*.pt
+*.pth
+*.ckpt
+!.gitkeep

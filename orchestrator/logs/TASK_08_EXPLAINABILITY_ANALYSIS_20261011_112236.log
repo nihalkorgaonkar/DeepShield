@@ -1,0 +1,7 @@
+=== DEEPSHIELD TASK LOG: TASK_08_EXPLAINABILITY_ANALYSIS ===
+Command: .venv\Scripts\python.exe scripts/run_explainability.py
+Start Time: 2026-10-11T11:22:36Z
+
+Running Explainability suite on device: cuda
+Saved Explainability Figure to: outputs/figures/explainability_comparison.png
+Saved Explainability Metadata to: outputs/figures/explainability_summary.json

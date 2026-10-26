@@ -1,0 +1,10 @@
+{
+  "vit_b16": {
+    "threshold": 0.986328,
+    "dev_eer": 0.015502,
+    "development_dataset": "ASVspoof2019_LA_dev",
+    "optimization_criterion": "min_eer",
+    "random_seed": 42,
+    "timestamp": "2026-10-11T10:56:05Z"
+  }
+}

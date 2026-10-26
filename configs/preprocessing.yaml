@@ -1,0 +1,31 @@
+# Standardized Audio and Spectrogram Preprocessing Configuration
+# DeepShield — Identical Preprocessing Pipeline for CNN & ViT Parity
+
+audio:
+  sample_rate: 16000
+  mono: true
+  chunk_duration: 4.0      # 4.0 seconds = 64,000 samples @ 16kHz
+  hop_duration: 2.0        # 2.0 seconds hop = 32,000 samples overlap
+  trim_silence: true       # Energy-based silence trimming
+  top_db: 30.0             # Top dB threshold for silence trimming
+  normalize_peak: true     # Peak normalize waveform to target range
+  target_peak: 0.95
+
+spectrogram:
+  n_fft: 1024
+  win_length: 400          # 25 ms window @ 16kHz
+  hop_length: 160          # 10 ms hop @ 16kHz
+  window_fn: "hann"
+  n_mels: 128              # 128 mel frequency filterbanks
+  fmin: 0                  # 0 Hz
+  fmax: 8000               # 8000 Hz (Nyquist limit)
+  power_to_db: true
+  top_db_spec: 80.0
+
+tensor_formatting:
+  image_size: [128, 128]   # Standard 128x128 representation for Experiments A, B, C, D
+  interpolation: "bicubic"
+  channels: 3              # 3-channel broadcast for ImageNet-pretrained backbones
+  imagenet_norm: true
+  mean: [0.485, 0.456, 0.406]
+  std: [0.229, 0.224, 0.225]

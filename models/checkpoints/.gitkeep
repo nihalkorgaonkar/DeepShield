@@ -1,0 +1,3 @@
+# Place pre-trained model checkpoints here:
+# - best_efficientnet_b0.pt
+# - best_vit_b16.pt

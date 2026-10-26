@@ -1,0 +1,6 @@
+=== DEEPSHIELD TASK LOG: TASK_06_COMPARATIVE_ANALYSIS ===
+Command: .venv\Scripts\python.exe scripts/generate_plots.py
+Start Time: 2026-10-11T11:12:45Z
+
+Generating DeepShield publication figures...
+Saved: outputs/figures/model_comparison_bar.png

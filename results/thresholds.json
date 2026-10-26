@@ -1,0 +1,16 @@
+{
+  "efficientnet_b0": {
+    "threshold": 0.967773,
+    "development_dataset": "ASVspoof2019_LA_dev",
+    "optimization_criterion": "min_eer",
+    "random_seed": 42,
+    "timestamp": "2026-10-10T21:16:05Z"
+  },
+  "vit_b16": {
+    "threshold": 0.701172,
+    "development_dataset": "ASVspoof2019_LA_dev",
+    "optimization_criterion": "min_eer",
+    "random_seed": 42,
+    "timestamp": "2026-10-04T21:08:48Z"
+  }
+}

@@ -1,0 +1,83 @@
+# DeepShield Master Research Experiment Configuration
+
+experiment:
+  project_name: "DeepShield-Audio-Deepfake-Detection"
+  random_seed: 42
+  deterministic: true
+  device: "cuda"           # Automatically falls back to cpu if cuda unavailable
+  mixed_precision: true    # FP16 Automatic Mixed Precision (torch.cuda.amp)
+  num_workers: 4
+
+data:
+  data_root: "C:\\DeepShieldData"  # NON-ONEDRIVE LOCAL STORAGE
+  asvspoof2019_subdir: "ASVspoof2019_LA"
+  asvspoof2021_subdir: "ASVspoof2021_DF"
+  smoke_test_fraction: 0.02 # Quick smoke test fraction (1-2%) for end-to-end verification
+
+models:
+  efficientnet:
+    model_name: "efficientnet_b0"
+    pretrained: true
+    num_classes: 2
+    in_channels: 3
+    dropout_rate: 0.2
+    input_resolution: [128, 128]
+  
+  vit:
+    model_name: "vit_base_patch16_224"
+    pretrained: true
+    num_classes: 2
+    in_channels: 3
+    patch_size: 16
+    input_resolution: [128, 128] # Handled via 2D positional embedding interpolation
+    dropout_rate: 0.1
+    drop_path_rate: 0.1
+
+training:
+  batch_size: 32
+  max_epochs: 25
+  optimizer:
+    name: "AdamW"
+    efficientnet_lr: 1.0e-4
+    vit_lr: 5.0e-5
+    weight_decay: 1.0e-2
+    betas: [0.9, 0.999]
+    eps: 1.0e-8
+  
+  scheduler:
+    name: "cosine"
+    min_lr: 1.0e-6
+    warmup_epochs: 2
+  
+  loss:
+    name: "weighted_cross_entropy"
+    class_weighting_mode: "inverse_frequency" # Computed dynamically from training protocol
+
+  early_stopping:
+    enabled: true
+    patience: 6
+    monitor_metric: "dev_eer"
+    mode: "min"
+
+threshold_tuning:
+  split: "development"     # STRICT DEV-SPLIT ONLY
+  metric: "min_eer"         # Equalize FPR and FNR
+  save_path: "results/thresholds.json"
+  freeze_before_eval: true
+
+evaluation:
+  metrics:
+    - "eer"
+    - "balanced_accuracy"
+    - "precision"
+    - "recall"
+    - "f1_score"
+    - "roc_auc"
+    - "pr_auc"
+    - "confusion_matrix"
+  export_csv: "results/model_comparison.csv"
+  export_plots: "results/model_comparison.png"
+
+explainability:
+  gradcam_target_layer: "features.8" # EfficientNet-B0 top conv layer
+  vit_attention_method: "attention_rollout"

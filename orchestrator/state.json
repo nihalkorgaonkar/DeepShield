@@ -1,0 +1,191 @@
+{
+  "project": "DeepShield",
+  "created_at": "2026-10-10T23:00:13Z",
+  "last_updated": "2026-10-11T11:24:05Z",
+  "active_task_id": null,
+  "tasks": {
+    "TASK_01_AUDIT_EXPERIMENT_A": {
+      "name": "Experiment A Threshold Discrepancy Audit",
+      "status": "COMPLETED",
+      "dependencies": [],
+      "retries": 0,
+      "max_retries": 1,
+      "start_time": "2026-10-10T23:07:38Z",
+      "end_time": "2026-10-10T23:08:30Z",
+      "elapsed_seconds": 52.28,
+      "exit_code": 0,
+      "artifacts": {
+        "reports/experiment_A_discrepancy_audit.md": "4655980bc6c948e807b8b7ae6584f5872aad40d3110344e0a13b8723c1758344"
+      },
+      "log_file": "orchestrator/logs\\TASK_01_AUDIT_EXPERIMENT_A_20261010_230738.log",
+      "error_message": null
+    },
+    "TASK_02_HARDEN_VIT_PIPELINE": {
+      "name": "ViT Pipeline Parity Verification",
+      "status": "COMPLETED",
+      "dependencies": [
+        "TASK_01_AUDIT_EXPERIMENT_A"
+      ],
+      "retries": 0,
+      "max_retries": 1,
+      "start_time": "2026-10-10T23:09:12Z",
+      "end_time": "2026-10-10T23:09:19Z",
+      "elapsed_seconds": 7.3,
+      "exit_code": 0,
+      "artifacts": {},
+      "log_file": "orchestrator/logs\\TASK_02_HARDEN_VIT_PIPELINE_20261010_230912.log",
+      "error_message": null
+    },
+    "TASK_03_TRAIN_VIT": {
+      "name": "Experiment B \u2014 ViT-B/16 Full Training",
+      "status": "COMPLETED",
+      "dependencies": [
+        "TASK_02_HARDEN_VIT_PIPELINE"
+      ],
+      "retries": 0,
+      "max_retries": 2,
+      "start_time": "2026-10-11T09:20:59Z",
+      "end_time": "2026-10-11T10:55:59Z",
+      "elapsed_seconds": 5700.24,
+      "exit_code": 0,
+      "artifacts": {
+        "models/checkpoints/best_vit_b16.pt": "14dfd3451c24499d17e705b1a0bc40fa7c8c1f6ef880e6c4bba2bd4570e799d0",
+        "results/training_history_vit_b16.json": "3a0918c4c2a4073bbea5230c9d41e331239ad78e4b9f4711af2cc5123f38583b"
+      },
+      "log_file": "orchestrator/logs\\TASK_03_TRAIN_VIT_20261011_092059.log",
+      "error_message": null
+    },
+    "TASK_04_FREEZE_VIT_THRESHOLD": {
+      "name": "ViT Development Threshold Freezing",
+      "status": "COMPLETED",
+      "dependencies": [
+        "TASK_03_TRAIN_VIT"
+      ],
+      "retries": 0,
+      "max_retries": 1,
+      "start_time": "2026-10-11T10:56:01Z",
+      "end_time": "2026-10-11T10:56:05Z",
+      "elapsed_seconds": 4.5,
+      "exit_code": 0,
+      "artifacts": {
+        "results/thresholds_vit.json": "8de1e67a29e8bb4e632c2d9c181d49b80fc0fbe5f08cdc371e216258d25f3263"
+      },
+      "log_file": "orchestrator/logs\\TASK_04_FREEZE_VIT_THRESHOLD_20261011_105601.log",
+      "error_message": null
+    },
+    "TASK_05_EVAL_VIT_2019_LA": {
+      "name": "Official ASVspoof 2019 LA Evaluation (ViT)",
+      "status": "COMPLETED",
+      "dependencies": [
+        "TASK_04_FREEZE_VIT_THRESHOLD"
+      ],
+      "retries": 0,
+      "max_retries": 1,
+      "start_time": "2026-10-11T10:56:05Z",
+      "end_time": "2026-10-11T11:12:45Z",
+      "elapsed_seconds": 999.38,
+      "exit_code": 0,
+      "artifacts": {
+        "results/model_comparison_vit.csv": "7f6a963219ba7bc30553235419f317f1cfb45424f298ec1789704e9dddde5a2a"
+      },
+      "log_file": "orchestrator/logs\\TASK_05_EVAL_VIT_2019_LA_20261011_105605.log",
+      "error_message": null
+    },
+    "TASK_06_COMPARATIVE_ANALYSIS": {
+      "name": "Empirical Model Comparison (A vs B)",
+      "status": "COMPLETED",
+      "dependencies": [
+        "TASK_05_EVAL_VIT_2019_LA"
+      ],
+      "retries": 0,
+      "max_retries": 2,
+      "start_time": "2026-10-11T11:12:45Z",
+      "end_time": "2026-10-11T11:12:51Z",
+      "elapsed_seconds": 5.88,
+      "exit_code": 0,
+      "artifacts": {
+        "outputs/figures/model_comparison_bar.png": "699ad7f4e14e7d460d62829c9b49e627a0d088ea954f0014b2ee933606a6b9be"
+      },
+      "log_file": "orchestrator/logs\\TASK_06_COMPARATIVE_ANALYSIS_20261011_111245.log",
+      "error_message": null
+    },
+    "TASK_07_ROBUSTNESS_EVALUATION": {
+      "name": "Acoustic Corruptions Robustness Suite",
+      "status": "COMPLETED",
+      "dependencies": [
+        "TASK_05_EVAL_VIT_2019_LA"
+      ],
+      "retries": 0,
+      "max_retries": 2,
+      "start_time": "2026-10-11T11:20:05Z",
+      "end_time": "2026-10-11T11:22:36Z",
+      "elapsed_seconds": 151.54,
+      "exit_code": 0,
+      "artifacts": {
+        "results/robustness_results.json": "78a338dbfd7b34b2b84f1f098e33e868443366139e62440103c64e958b5a9500",
+        "outputs/figures/robustness_comparison.png": "4ab17646c434bf22e4cf08e1d234685fb34d9a41d116f7bb3e40afc10c3ebe68"
+      },
+      "log_file": "orchestrator/logs\\TASK_07_ROBUSTNESS_EVALUATION_20261011_112005.log",
+      "error_message": null
+    },
+    "TASK_08_EXPLAINABILITY_ANALYSIS": {
+      "name": "Explainability & Attention Maps Generation",
+      "status": "COMPLETED",
+      "dependencies": [
+        "TASK_05_EVAL_VIT_2019_LA"
+      ],
+      "retries": 0,
+      "max_retries": 2,
+      "start_time": "2026-10-11T11:22:36Z",
+      "end_time": "2026-10-11T11:22:50Z",
+      "elapsed_seconds": 13.9,
+      "exit_code": 0,
+      "artifacts": {
+        "outputs/figures/explainability_comparison.png": "7b384ceeaae5fe9289ebb73476e2ff586bfe0fded14cefe590502d140a842aaf",
+        "outputs/figures/explainability_summary.json": "cf3db461d9642005b8adc89818aec615097688644396da0ea31f2a482db2db3b"
+      },
+      "log_file": "orchestrator/logs\\TASK_08_EXPLAINABILITY_ANALYSIS_20261011_112236.log",
+      "error_message": null
+    },
+    "TASK_09_GENERALIZATION_2021_DF": {
+      "name": "ASVspoof 2021 DF Cross-Dataset Preflight & Eval",
+      "status": "COMPLETED",
+      "dependencies": [
+        "TASK_05_EVAL_VIT_2019_LA"
+      ],
+      "retries": 0,
+      "max_retries": 1,
+      "start_time": "2026-10-11T11:24:02Z",
+      "end_time": "2026-10-11T11:24:02Z",
+      "elapsed_seconds": 0.07,
+      "exit_code": 0,
+      "artifacts": {
+        "results/generalization_2021_df_status.json": "d04d2a7153e586a4001cc9d01df803e861823343721dbf1c5d81846d383f8891"
+      },
+      "log_file": "orchestrator/logs\\TASK_09_GENERALIZATION_2021_DF_20261011_112402.log",
+      "error_message": null
+    },
+    "TASK_10_FINAL_DELIVERABLES": {
+      "name": "Final Research Report & Artifact Quality Audit",
+      "status": "COMPLETED",
+      "dependencies": [
+        "TASK_06_COMPARATIVE_ANALYSIS",
+        "TASK_07_ROBUSTNESS_EVALUATION",
+        "TASK_08_EXPLAINABILITY_ANALYSIS",
+        "TASK_09_GENERALIZATION_2021_DF"
+      ],
+      "retries": 0,
+      "max_retries": 1,
+      "start_time": "2026-10-11T11:24:02Z",
+      "end_time": "2026-10-11T11:24:05Z",
+      "elapsed_seconds": 2.26,
+      "exit_code": 0,
+      "artifacts": {
+        "docs/final_report.md": "d20e8f9344c377e9e1d863906ef254c5a4a2bf96db2b6fca11aedf6b3a7137bb",
+        "docs/final_audit.md": "34c870becf1db87a558696bfed4960dce92fe106a0e5587ae18e7bb27b958b7a"
+      },
+      "log_file": "orchestrator/logs\\TASK_10_FINAL_DELIVERABLES_20261011_112402.log",
+      "error_message": null
+    }
+  }
+}
